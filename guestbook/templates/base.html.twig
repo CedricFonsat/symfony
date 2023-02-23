@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-       
+       {% block stylesheet %} <link href="{{ asset('assets/css/style.css') }}" type="text/css" rel="stylesheet" /> {% endblock %}
     </head>
     <body>
         <header>
@@ -11,8 +11,9 @@
                 <li><a href="{{ path('conference', { slug: conference.slug }) }}">{{ conference }}</a></li>
            {% endfor %}
             </ul>
-            <hr />
         </header>
         {% block body %}{% endblock %}
+         {% block javascript %} <script src="{{ asset('assets/js/app.js') }}"></script>
+{% endblock %}
     </body>
 </html>

@@ -16,20 +16,31 @@ class CommentFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-                    ->add('author', null, [
-                        'label' => 'Your name',
-                    ])
-                     ->add('text')
-                    ->add('email', EmailType::class)
-                    ->add('photo', FileType::class, [
-                        'required' => false,
-                        'mapped' => false,
-                        'constraints' => [
-                            new Image(['maxSize' => '1024k'])
-                        ],
-                    ])
-                    ->add('submit', SubmitType::class)
-        ;
+            ->add('author', null, [
+                'label' => 'Name',
+                'attr' => ['class' => 'input'],
+            ])
+            ->add('text', null, [
+                'attr' => ['class' => 'input'],
+                'label' => 'Text',
+            ])
+            ->add('email', EmailType::class, [
+                'attr' => ['class' => 'input'],
+                'label' => 'Email',
+            ])
+            ->add('photo', FileType::class, [
+                'required' => false,
+                'mapped' => false,
+                'constraints' => [
+                    new Image(['maxSize' => '1024k'])
+                ],
+                'attr' => ['class' => 'input'],
+                'label' => 'Photo',
+            ])
+            ->add('submit', SubmitType::class, [
+                'attr' => ['class' => 'input'],
+                'label' => 'Envoyer',
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

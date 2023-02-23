@@ -1,27 +1,59 @@
 {% extends 'base.html.twig' %}
-{% block title %}Conference Guestbook - {{ conference }}{% endblock %}
-{% block body %}
-    <h2>{{ conference }} Conference</h2>
-    {% if comments|length > 0 %}
-    <div>There are {{ comments|length }} comments.</div>
-        {% for comment in comments %}
-            {% if comment.photofilename %}
-                {<img src="{{ asset('uploads/photos/' ~ comment.photofilename) }}" /> || <img src="{{comment.photofilename}}" />}
-            {% endif %}
-            <h4>{{ comment.author }}</h4>
-            <small>
-                {{ comment.createdAt|format_datetime('medium', 'short') }}
-            </small>
-            <p>{{ comment.text }}</p>
-        {% endfor %}
-            {% if previous >= 0 %}
-            <a href="{{ path('conference', { slug: conference.slug, offset: previous }) }}">Previous</a>
-        {% endif %}+        {% if next < comments|length %}
-             <a href="{{ path('conference', { slug: conference.slug, offset: next }) }}">Next</a>
-        {% endif %}
-    {% else %}
-        <div>No comments have been posted yet for this conference.</div>
-    {% endif %}
-    <h2>Add your own feedback</h2>
-    {{ form(comment_form) }}
+{% block title %}Conference Guestbook -
+	{{ conference }}
 {% endblock %}
+{% block body %}
+	<main>
+		<h2>{{ conference }}
+			Conference</h2>
+		{% if comments|length > 0 %}
+			<div>There are
+				{{ comments|length }}
+				comments.</div>
+			<table id="customers">
+				<tr>
+					<th>Company</th>
+					<th>Contact</th>
+					<th>Country</th>
+					<th>Country</th>
+					<th>Country</th>
+				</tr>
+				{% for comment in comments %}
+					<tr>
+						<td>
+							{% if comment.photofilename %}
+								<img src="{{ asset('uploads/photos/' ~ comment.photofilename) }}"/>
+							{% endif %}
+						</td>
+						<td>
+							<h4>{{ comment.author }}</h4>
+						</td>
+						<td>
+							<small>
+								{{ comment.createdAt|format_datetime('medium', 'short') }}
+							</small>
+						</td>
+						<td>
+							<p>{{ comment.text }}</p><td/>
+						</td>
+					</tr>
+				{% endfor %}
+			</table>
+			{% if previous >= 0 %}
+				<a href="{{ path('conference', { slug: conference.slug, offset: previous }) }}">Previous</a>
+			{% endif %}+
+		<div class="pagination">
+			{% if next < comments|length %}
+				<a href="{{ path('conference', { slug: conference.slug, offset: next }) }}">Next</a>
+			{% endif %}
+		{% else %}
+			<div>No comments have been posted yet for this conference.</div>
+		{% endif %}
+		</div>
+		<div id="form">
+			{{ form(comment_form) }}
+			</div>
+
+
+			</main>
+		{% endblock %}
